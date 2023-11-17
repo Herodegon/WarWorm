@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://btlchqapypaob"]
+
+[ext_resource type="PackedScene" uid="uid://bgdrv108iaqmw" path="res://Scenes/snake/snake.tscn" id="1_qwyll"]
+[ext_resource type="Script" path="res://Scenes/walls.gd" id="2_ceuun"]
+[ext_resource type="Texture2D" uid="uid://8dg6idphq0lu" path="res://Assets/wall.png" id="2_giuu4"]
+[ext_resource type="PackedScene" uid="uid://uekv1renigdx" path="res://Scenes/food/food_spawner.tscn" id="4_fkimr"]
+[ext_resource type="PackedScene" uid="uid://bqg701b1mssqi" path="res://Scenes/ui_layer.tscn" id="5_bv4o6"]
+[ext_resource type="PackedScene" uid="uid://db8opydefqqvt" path="res://Scenes/enemy/enemy.tscn" id="6_7x5fr"]
+
+[node name="game" type="Node2D"]
+
+[node name="snake" parent="." node_paths=PackedStringArray("food_spawner", "walls") instance=ExtResource("1_qwyll")]
+food_spawner = NodePath("../food_Spawner")
+walls = NodePath("../walls")
+
+[node name="walls" type="Node" parent="."]
+script = ExtResource("2_ceuun")
+
+[node name="bottomWall" type="Sprite2D" parent="walls" groups=["walls"]]
+position = Vector2(0, 634)
+scale = Vector2(60, 0.5)
+texture = ExtResource("2_giuu4")
+
+[node name="topWall" type="Sprite2D" parent="walls" groups=["walls"]]
+position = Vector2(0, -634)
+scale = Vector2(60, 0.5)
+texture = ExtResource("2_giuu4")
+
+[node name="leftWall" type="Sprite2D" parent="walls" groups=["walls"]]
+position = Vector2(954, 0)
+rotation = 1.5708
+scale = Vector2(40, 0.5)
+texture = ExtResource("2_giuu4")
+
+[node name="rightWall" type="Sprite2D" parent="walls" groups=["walls"]]
+position = Vector2(-954, 0)
+rotation = 1.5708
+scale = Vector2(40, 0.5)
+texture = ExtResource("2_giuu4")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+
+[node name="food_Spawner" parent="." node_paths=PackedStringArray("walls") groups=["foodSpawner"] instance=ExtResource("4_fkimr")]
+walls = NodePath("../walls")
+
+[node name="uiLayer" parent="." instance=ExtResource("5_bv4o6")]
+
+[node name="enemy_walker" parent="." instance=ExtResource("6_7x5fr")]
