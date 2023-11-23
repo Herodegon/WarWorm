@@ -68,6 +68,7 @@ func _input(event):
 		if event.pressed and event.is_action_pressed("pause"):
 			on_pause.emit()
 
+# Main Snake Function
 func on_timeout():
 	var new_head_position = position + (move_direction*BODY_SEGMENT_SIZE)
 	
