@@ -4,7 +4,7 @@ extends Node2D
 
 const BODY_SEGMENT_SIZE = 32
 
-@onready var snake: Snake = $"../snake"
+var snake: Snake
 @export var bullet: Bullet
 
 var velocity = 3

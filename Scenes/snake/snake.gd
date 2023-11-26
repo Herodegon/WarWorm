@@ -28,13 +28,12 @@ var body_texture = preload("res://Assets/snake.png")
 var dead_texture = preload("res://Assets/head_game-over.png")
 
 @export var food_spawner: Food_Spawner
+@export var enemy_spawner: Enemy_Spawner
 @export var walls: Walls
 var walls_dict # Set on ready
 
 # Direction of snake's next position
 var move_direction = Vector2.ZERO
-# TODO: Increase move speed while holding down shift
-var is_sprint = false
 var can_input = true
 
 var total_points = 0
@@ -100,12 +99,13 @@ func on_timeout():
 		move_to_position(position_after_collision)
 	
 	# Food Collision
-	if new_head_position == food_spawner.food_position:
-		total_points += 1
-		on_point_scored.emit(total_points)
-		food_spawner.destory_food()
-		food_spawner.spawn_food()
-		add_body_part()
+	for food in food_spawner.get_children():
+		if new_head_position == food.position:
+			total_points += 1
+			on_point_scored.emit(total_points)
+			food_spawner.destory_food(food.position)
+			food_spawner.spawn_food()
+			add_body_part()
 
 func move_to_position(new_position):
 	# Update Body - FIFO Implementation

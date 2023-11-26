@@ -18,30 +18,34 @@ autostart = true
 [node name="walls" type="Node" parent="."]
 script = ExtResource("2_ceuun")
 
-[node name="Camera2D" type="Camera2D" parent="walls"]
-zoom = Vector2(0.5, 0.5)
-
 [node name="bottomWall" type="Sprite2D" parent="walls" groups=["group_walls"]]
+z_index = 2
 position = Vector2(0, 634)
 scale = Vector2(60, 0.5)
 texture = ExtResource("2_giuu4")
 
 [node name="topWall" type="Sprite2D" parent="walls" groups=["group_walls"]]
+z_index = 2
 position = Vector2(0, -634)
 scale = Vector2(60, 0.5)
 texture = ExtResource("2_giuu4")
 
-[node name="leftWall" type="Sprite2D" parent="walls" groups=["group_walls"]]
-position = Vector2(954, 0)
+[node name="leftWall2" type="Sprite2D" parent="walls" groups=["group_walls"]]
+z_index = 2
+position = Vector2(-954, 0)
 rotation = 1.5708
 scale = Vector2(40, 0.5)
 texture = ExtResource("2_giuu4")
 
 [node name="rightWall" type="Sprite2D" parent="walls" groups=["group_walls"]]
-position = Vector2(-954, 0)
+z_index = 2
+position = Vector2(954, 0)
 rotation = 1.5708
 scale = Vector2(40, 0.5)
 texture = ExtResource("2_giuu4")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
 
 [node name="snake" parent="." node_paths=PackedStringArray("food_spawner", "walls") instance=ExtResource("1_qwyll")]
 food_spawner = NodePath("../food_Spawner")

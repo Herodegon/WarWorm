@@ -8,6 +8,9 @@ const BODY_SEGMENT_SIZE = 32
 @onready var walls: Walls
 var walls_dict
 
+var top_left_corner: Vector2
+var bottom_right_corner: Vector2
+
 var move_direction = Vector2.ZERO
 var enemy_timeout = 2 # Number of times snake moves before enemy moves
 
@@ -23,9 +26,11 @@ func setup(snake: Snake, walls: Walls):
 
 # Main Enemy AI
 func walker_timeout():
-	get_move_direction()
 	var new_position = position
+	top_left_corner = position
+	bottom_right_corner = position + Vector2(BODY_SEGMENT_SIZE,BODY_SEGMENT_SIZE)
 	if enemy_timeout == 0:
+		get_move_direction()
 		new_position += (move_direction*BODY_SEGMENT_SIZE)
 		enemy_timeout = 2
 	
@@ -62,12 +67,12 @@ func get_move_direction():
 				move_direction = Vector2.LEFT
 				return
 				
-	if snake.position.y != position.y:
+	if snake.position.y != position.y && (move_direction != Vector2.DOWN && move_direction != Vector2.UP):
 		if snake.position.y > position.y:
 			move_direction = Vector2.DOWN
 		elif snake.position.y < position.y:
 			move_direction = Vector2.UP
-	elif snake.position.x != position.x:
+	elif snake.position.x != position.x && (move_direction != Vector2.RIGHT && move_direction != Vector2.LEFT):
 		if snake.position.x > position.x:
 			move_direction = Vector2.RIGHT
 		elif snake.position.x < position.x:

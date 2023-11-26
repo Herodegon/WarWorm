@@ -12,9 +12,10 @@ extends CanvasLayer
 @onready var game_over_label = $game_over_label
 
 @onready var snake: Snake = $"../snake"
+@onready var enemy_spawner: Enemy_Spawner = $"../enemy_spawner"
 
-var isPaused = false
-var isGameOver = false
+var is_paused = false
+var is_game_over = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,20 +30,23 @@ func on_point_scored(points: int):
 	points_label.text = "Points: %d" % points
 
 func on_pause():
-	if isGameOver: # If on Game Over screen, does not pause
+	if is_game_over: # If on Game Over screen, does not pause
 		return
-	isPaused = !(isPaused)
-	match isPaused:
+	is_paused = !(is_paused)
+	match is_paused:
 		true:
 			snake.timer.set_paused(true)
+			enemy_spawner.spawn_timer.set_paused(true)
 			pause_label.visible = true
 			buttonContainer.visible = true 
 		false:
 			snake.timer.set_paused(false)
+			enemy_spawner.spawn_timer.set_paused(false)
 			pause_label.visible = false
 
 func on_game_over():
-	isGameOver = true
+	is_game_over = true
+	enemy_spawner.spawn_timer.stop()
 	buttonContainer.visible = true
 	game_over_label.visible = true
 	

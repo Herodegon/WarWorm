@@ -37,26 +37,26 @@ func get_spawn_position():
 	var x_pos
 	var y_pos
 	match rand_wall:
-		0: # Top Wall
+		0: # Top Wall - POSITION OFF ON Y-AXIS
 			x_pos = round(randi_range(walls.top_left_corner.x + BODY_SEGMENT_SIZE, walls.top_right_corner.x - BODY_SEGMENT_SIZE)/BODY_SEGMENT_SIZE)*BODY_SEGMENT_SIZE
-			y_pos = walls.walls_dict["top"].position.y + BODY_SEGMENT_SIZE
+			y_pos = walls.walls_dict["top"].position.y
 		1: # Bottom Wall
 			x_pos = round(randi_range(walls.bottom_left_corner.x + BODY_SEGMENT_SIZE, walls.bottom_right_corner.x - BODY_SEGMENT_SIZE)/BODY_SEGMENT_SIZE)*BODY_SEGMENT_SIZE
-			y_pos = walls.walls_dict["bottom"].position.y - BODY_SEGMENT_SIZE
-		2: # Left Wall
-			x_pos = walls.walls_dict["left"].position.x + BODY_SEGMENT_SIZE
+			y_pos = walls.walls_dict["bottom"].position.y
+		2: # Left Wall - POSITION OFF ON X-AXIS
+			x_pos = walls.walls_dict["left"].position.x
 			y_pos = round(randi_range(walls.top_left_corner.y + BODY_SEGMENT_SIZE, walls.bottom_left_corner.y - BODY_SEGMENT_SIZE)/BODY_SEGMENT_SIZE)*BODY_SEGMENT_SIZE
 		3: # Right Wall
-			x_pos = walls.walls_dict["right"].position.x - BODY_SEGMENT_SIZE
+			x_pos = walls.walls_dict["right"].position.x
 			y_pos = round(randi_range(walls.top_right_corner.y + BODY_SEGMENT_SIZE, walls.bottom_right_corner.y - BODY_SEGMENT_SIZE)/BODY_SEGMENT_SIZE)*BODY_SEGMENT_SIZE
-	if (x_pos != 0):
-		var difference_x = (x_pos/abs(x_pos))*fmod(x_pos,BODY_SEGMENT_SIZE)
+	print_debug("Old: ",x_pos,", ",y_pos)
+	if (x_pos != 0 && fmod(x_pos,BODY_SEGMENT_SIZE) != 0):
+		print_debug(fmod(x_pos,BODY_SEGMENT_SIZE))
+		var difference_x = fmod(x_pos,BODY_SEGMENT_SIZE)
 		x_pos -= difference_x
-		print_debug(difference_x)
-	if (y_pos != 0):
-		var difference_y = (y_pos/abs(y_pos))*fmod(y_pos,BODY_SEGMENT_SIZE)
+	if (y_pos != 0 && fmod(y_pos,BODY_SEGMENT_SIZE) != 0):
+		print_debug(fmod(y_pos,BODY_SEGMENT_SIZE))
+		var difference_y = fmod(y_pos,BODY_SEGMENT_SIZE)
 		y_pos -= difference_y
-		print_debug(difference_y)
-	print_debug("(",x_pos,", ",y_pos,")")
+	print_debug("New: ",x_pos,", ", y_pos)
 	return Vector2(x_pos,y_pos)
-	
