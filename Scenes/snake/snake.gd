@@ -7,6 +7,7 @@ const BODY_SEGMENT_SIZE = 32
 signal on_point_scored(points: int)
 signal on_pause
 signal on_game_over
+signal on_fire_weapon
 
 enum collisionDirection 
 {
@@ -18,7 +19,7 @@ enum collisionDirection
 
 var body_parts = []
 @onready var snake_parts: Node = $snake_parts
-@onready var timer = $snake_timer
+@onready var timer: Timer = $"../game_timer"
 @onready var health_label = $health_label
 @onready var health_timer = $health_label/health_timer
 
@@ -34,6 +35,7 @@ var walls_dict # Set on ready
 var move_direction = Vector2.ZERO
 # TODO: Increase move speed while holding down shift
 var is_sprint = false
+var can_input = true
 
 var total_points = 0
 var health = 3
@@ -49,12 +51,13 @@ func _ready():
 	body_parts.append(head)
 	# Setup the timer
 	timer.timeout.connect(on_timeout)
-	food_spawner = get_tree().get_first_node_in_group("foodSpawner")
+	food_spawner = get_tree().get_first_node_in_group("group_food_spawner")
 	
 	walls_dict = walls.walls_dict
 
 func _input(event):
-	if event is InputEventKey and event.pressed:
+	if event is InputEventKey and event.pressed and can_input:
+		# Movement
 		if (event.is_action_pressed("ui_up") or event.is_action_pressed("up")) and move_direction.y != 1:
 			move_direction = Vector2.UP
 		elif (event.is_action_pressed("ui_down") or event.is_action_pressed("down")) and move_direction.y != -1:
@@ -63,10 +66,16 @@ func _input(event):
 			move_direction = Vector2.RIGHT
 		elif (event.is_action_pressed("ui_left") or event.is_action_pressed("left")) and move_direction.x != 1:
 			move_direction = Vector2.LEFT
-	
-	if event is InputEventKey:
+			
+		# Fire Weapon(s)
+		if event.is_action_pressed("fire"):
+			on_fire_weapon.emit()
+			
+	# Pause
+	if event is InputEventKey and event.pressed:
 		if event.pressed and event.is_action_pressed("pause"):
 			on_pause.emit()
+			can_input = !(can_input)
 
 # Main Snake Function
 func on_timeout():

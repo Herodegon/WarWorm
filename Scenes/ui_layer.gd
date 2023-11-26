@@ -1,4 +1,4 @@
-class_name UILayer
+class_name UI_Layer
 
 extends CanvasLayer
 

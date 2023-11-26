@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/ui_layer.gd" id="1_b8uh4"]
 
-[node name="uiLayer" type="CanvasLayer"]
+[node name="ui_layer" type="CanvasLayer"]
 script = ExtResource("1_b8uh4")
 
 [node name="boxContainer" type="HBoxContainer" parent="."]

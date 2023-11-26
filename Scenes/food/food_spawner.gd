@@ -4,7 +4,7 @@ extends Node
 
 const BODY_SEGMENT_SIZE = 32
 
-@export var walls: Walls
+@onready var walls: Walls = $"../walls"
 @export var food_scene: PackedScene
 
 var food: Sprite2D

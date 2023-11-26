@@ -1,20 +1,25 @@
-class_name enemy_walker
+class_name Enemy_Walker
 
 extends Node2D
 
 const BODY_SEGMENT_SIZE = 32
 
-@onready var snake: Snake = $"../snake"
+@onready var snake: Snake
+@onready var walls: Walls
 var walls_dict
 
 var move_direction = Vector2.ZERO
 var enemy_timeout = 2 # Number of times snake moves before enemy moves
 
 func _ready():
-	position = Vector2(128.0,128.0)
+	pass
+	
+func setup(snake: Snake, walls: Walls):
+	self.snake = snake
+	self.walls = walls
 	snake.timer.timeout.connect(walker_timeout)
 	
-	walls_dict = snake.walls_dict
+	walls_dict = walls.walls_dict
 
 # Main Enemy AI
 func walker_timeout():
@@ -92,7 +97,7 @@ func get_enemy_pos_after_wall_collision(wall_collision, new_enemy_position: Vect
 				
 func check_enemy_snake_collision(new_enemy_position: Vector2):
 	for part in snake.body_parts:
-		if part.position == position:
+		if part.position == new_enemy_position:
 			return true
 			
 	return false

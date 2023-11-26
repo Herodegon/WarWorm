@@ -7,10 +7,6 @@ script = ExtResource("1_q21vv")
 
 [node name="snake_parts" type="Node" parent="."]
 
-[node name="snake_timer" type="Timer" parent="."]
-wait_time = 0.15
-autostart = true
-
 [node name="health_label" type="Label" parent="."]
 visible = false
 z_index = 2
