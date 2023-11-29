@@ -7,4 +7,5 @@
 script = ExtResource("1_h8cck")
 
 [node name="sprite_walker" type="Sprite2D" parent="."]
+z_index = 1
 texture = ExtResource("2_1t7sq")

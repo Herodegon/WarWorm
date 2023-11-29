@@ -4,8 +4,8 @@ extends Node2D
 
 const BODY_SEGMENT_SIZE = 32
 
-@onready var snake: Snake
-@onready var walls: Walls
+var snake: Snake
+var walls: Walls
 var walls_dict
 
 var top_left_corner: Vector2

@@ -18,18 +18,21 @@ enum collisionDirection
 }
 
 var body_parts = []
+var weapons = []
 @onready var snake_parts: Node = $snake_parts
+@onready var weapon_parts: Node = $weapon_parts
 @onready var timer: Timer = $"../game_timer"
-@onready var health_label = $health_label
-@onready var health_timer = $health_label/health_timer
+@onready var health_label: Label = $health_label
+@onready var health_timer: Timer = $health_label/health_timer
 
 var head_texture = preload("res://Assets/head.png")
 var body_texture = preload("res://Assets/snake.png")
 var dead_texture = preload("res://Assets/head_game-over.png")
 
-@export var food_spawner: Food_Spawner
-@export var enemy_spawner: Enemy_Spawner
-@export var walls: Walls
+@onready var food_spawner: Food_Spawner = $"../food_spawner"
+@onready var enemy_spawner: Enemy_Spawner = $"../enemy_spawner"
+@onready var weapon_handler: Weapon_Handler = $"../weapon_handler"
+@onready var walls: Walls = $"../walls"
 var walls_dict # Set on ready
 
 # Direction of snake's next position
@@ -106,6 +109,10 @@ func on_timeout():
 			food_spawner.destory_food(food.position)
 			food_spawner.spawn_food()
 			add_body_part()
+			
+			if body_parts.size()%2 == 0:
+				print_debug("Call to make weapon...")
+				add_weapon_part("gun_turret", body_parts.size()-1)
 
 func move_to_position(new_position):
 	# Update Body - FIFO Implementation
@@ -120,6 +127,15 @@ func move_to_position(new_position):
 	body_parts[0].position = new_position
 	body_parts[0].rotation_degrees = update_sprite_rotation()
 	
+	# Update Weapons
+	move_weapon_positions()
+	
+func move_weapon_positions():
+	if body_parts.size() > 1:
+		for weapon in weapons:
+			weapon.position = body_parts[weapon.body_index].position
+			weapon.rotation_degrees = body_parts[weapon.body_index].rotation_degrees
+
 func on_damage():
 	health -= 1
 	if health == 0:
@@ -168,14 +184,28 @@ func add_body_part():
 	new_part.rotation = update_sprite_rotation()
 	snake_parts.add_child(new_part)
 	body_parts.append(new_part)
+	
+func add_weapon_part(weapon_name,body_index):
+	var weapon_class = weapon_handler.get_weapon(weapon_name)
+	print_debug(weapon_class.get_class())
+	if weapon_class == null:
+		print_debug("ERROR: Failed to make weapon")
+	if weapon_class != null:
+		var new_weapon = weapon_class.instantiate()
+		print_debug("Weapon created")
+		new_weapon.setup(self,walls,enemy_spawner)
+		new_weapon.body_index = body_index
+		weapon_parts.add_child(new_weapon)
+		weapons.append(new_weapon)
+		print_debug("Weapon attached")
 
 # Returns sprite direction in degrees
 func update_sprite_rotation():
-	if move_direction == Vector2.LEFT:
-		return 180.0
-	elif move_direction == Vector2.UP:
+	if move_direction == Vector2.UP:
 		return 270.0
 	elif move_direction == Vector2.DOWN:
 		return 90.0
+	elif move_direction == Vector2.LEFT:
+		return 180.0
 	else:
 		return 0.0

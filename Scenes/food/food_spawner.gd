@@ -11,8 +11,7 @@ var new_food: Sprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in 5:
-		spawn_food()
+	spawn_food()
 
 func spawn_food():
 	new_food = food_scene.instantiate()

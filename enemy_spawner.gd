@@ -49,14 +49,10 @@ func get_spawn_position():
 		3: # Right Wall
 			x_pos = walls.walls_dict["right"].position.x
 			y_pos = round(randi_range(walls.top_right_corner.y + BODY_SEGMENT_SIZE, walls.bottom_right_corner.y - BODY_SEGMENT_SIZE)/BODY_SEGMENT_SIZE)*BODY_SEGMENT_SIZE
-	print_debug("Old: ",x_pos,", ",y_pos)
 	if (x_pos != 0 && fmod(x_pos,BODY_SEGMENT_SIZE) != 0):
-		print_debug(fmod(x_pos,BODY_SEGMENT_SIZE))
 		var difference_x = fmod(x_pos,BODY_SEGMENT_SIZE)
 		x_pos -= difference_x
 	if (y_pos != 0 && fmod(y_pos,BODY_SEGMENT_SIZE) != 0):
-		print_debug(fmod(y_pos,BODY_SEGMENT_SIZE))
 		var difference_y = fmod(y_pos,BODY_SEGMENT_SIZE)
 		y_pos -= difference_y
-	print_debug("New: ",x_pos,", ", y_pos)
 	return Vector2(x_pos,y_pos)

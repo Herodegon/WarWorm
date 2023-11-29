@@ -7,6 +7,7 @@ script = ExtResource("1_b8uh4")
 
 [node name="boxContainer" type="HBoxContainer" parent="."]
 visible = false
+z_index = 10
 custom_minimum_size = Vector2(400, 64)
 anchors_preset = 3
 anchor_left = 1.0
@@ -21,16 +22,19 @@ theme_override_constants/separation = 64
 alignment = 1
 
 [node name="restart" type="Button" parent="boxContainer"]
+z_index = 10
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Restart"
 
 [node name="quit" type="Button" parent="boxContainer"]
+z_index = 10
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Quit"
 
 [node name="points_label" type="Label" parent="."]
+z_index = 10
 custom_minimum_size = Vector2(400, 64)
 anchors_preset = 1
 anchor_left = 1.0
@@ -45,6 +49,7 @@ vertical_alignment = 1
 
 [node name="pause_label" type="Label" parent="."]
 visible = false
+z_index = 10
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -63,6 +68,7 @@ vertical_alignment = 1
 
 [node name="game_over_label" type="Label" parent="."]
 visible = false
+z_index = 10
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

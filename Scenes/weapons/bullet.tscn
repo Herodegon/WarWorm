@@ -8,3 +8,7 @@ script = ExtResource("1_t7uy3")
 
 [node name="sprite_bullet" type="Sprite2D" parent="."]
 texture = ExtResource("1_brxhj")
+
+[node name="bullet_timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true

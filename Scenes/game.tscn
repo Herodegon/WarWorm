@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://btlchqapypaob"]
+[gd_scene load_steps=8 format=3 uid="uid://btlchqapypaob"]
 
 [ext_resource type="PackedScene" uid="uid://bgdrv108iaqmw" path="res://Scenes/snake/snake.tscn" id="1_qwyll"]
 [ext_resource type="Script" path="res://Scenes/walls.gd" id="2_ceuun"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://uekv1renigdx" path="res://Scenes/food/food_spawner.tscn" id="4_fkimr"]
 [ext_resource type="PackedScene" uid="uid://bqg701b1mssqi" path="res://Scenes/ui_layer.tscn" id="5_bv4o6"]
 [ext_resource type="PackedScene" uid="uid://diw8e5robhur3" path="res://Scenes/enemies/enemy_spawner.tscn" id="6_pb04m"]
+[ext_resource type="PackedScene" uid="uid://br62m8hsk0gtt" path="res://Scenes/weapons/weapon_handler.tscn" id="7_u4adi"]
 
 [node name="game" type="Node2D"]
 
@@ -19,26 +20,26 @@ autostart = true
 script = ExtResource("2_ceuun")
 
 [node name="bottomWall" type="Sprite2D" parent="walls" groups=["group_walls"]]
-z_index = 2
+z_index = 10
 position = Vector2(0, 634)
 scale = Vector2(60, 0.5)
 texture = ExtResource("2_giuu4")
 
 [node name="topWall" type="Sprite2D" parent="walls" groups=["group_walls"]]
-z_index = 2
+z_index = 10
 position = Vector2(0, -634)
 scale = Vector2(60, 0.5)
 texture = ExtResource("2_giuu4")
 
 [node name="leftWall2" type="Sprite2D" parent="walls" groups=["group_walls"]]
-z_index = 2
+z_index = 10
 position = Vector2(-954, 0)
 rotation = 1.5708
 scale = Vector2(40, 0.5)
 texture = ExtResource("2_giuu4")
 
 [node name="rightWall" type="Sprite2D" parent="walls" groups=["group_walls"]]
-z_index = 2
+z_index = 10
 position = Vector2(954, 0)
 rotation = 1.5708
 scale = Vector2(40, 0.5)
@@ -47,10 +48,10 @@ texture = ExtResource("2_giuu4")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
 
-[node name="snake" parent="." node_paths=PackedStringArray("food_spawner", "walls") instance=ExtResource("1_qwyll")]
-food_spawner = NodePath("../food_Spawner")
-walls = NodePath("../walls")
+[node name="snake" parent="." instance=ExtResource("1_qwyll")]
 
-[node name="food_Spawner" parent="." groups=["group_food_spawner"] instance=ExtResource("4_fkimr")]
+[node name="food_spawner" parent="." groups=["group_food_spawner"] instance=ExtResource("4_fkimr")]
 
 [node name="enemy_spawner" parent="." instance=ExtResource("6_pb04m")]
+
+[node name="weapon_handler" parent="." instance=ExtResource("7_u4adi")]
