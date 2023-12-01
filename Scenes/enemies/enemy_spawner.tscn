@@ -8,3 +8,5 @@ script = ExtResource("1_af7wc")
 [node name="spawn_timer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="enemies_spawned" type="Node" parent="."]

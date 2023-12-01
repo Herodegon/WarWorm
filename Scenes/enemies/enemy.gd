@@ -8,11 +8,18 @@ var snake: Snake
 var walls: Walls
 var walls_dict
 
+@onready var health_label: Label = $health_label
+@onready var health_timer: Timer = $health_label/health_timer
+
 var top_left_corner: Vector2
 var bottom_right_corner: Vector2
 
 var move_direction = Vector2.ZERO
-var enemy_timeout = 2 # Number of times snake moves before enemy moves
+var enemy_timeout: int = 2 # Number of times snake moves before enemy moves
+
+var maxHealth: int = 2
+var currHealth: int = maxHealth
+var damage: int = 1 
 
 func _ready():
 	pass
@@ -33,11 +40,11 @@ func walker_timeout():
 		get_move_direction()
 		new_position += (move_direction*BODY_SEGMENT_SIZE)
 		enemy_timeout = 2
-	
-	# Snake Collision
-	var enemy_snake_collision = check_enemy_snake_collision(new_position)
-	if enemy_snake_collision:
-		snake.on_damage()
+		
+		# Snake Collision
+		var enemy_snake_collision = check_enemy_snake_collision(new_position)
+		if enemy_snake_collision:
+			snake.on_damage(damage)
 		
 	# Wall Collision
 	var enemy_wall_collision = check_enemy_wall_collision(new_position)
@@ -77,7 +84,17 @@ func get_move_direction():
 			move_direction = Vector2.RIGHT
 		elif snake.position.x < position.x:
 			move_direction = Vector2.LEFT
-				
+
+func on_damage(damage_dealt: int):
+	currHealth -= damage_dealt
+	if currHealth <= 0:
+		health_label.visible = false
+		self.queue_free()
+	else:
+		health_label.text = "%d/%d" % [currHealth,maxHealth]
+		health_label.visible = true
+		health_timer.start()
+
 func check_enemy_wall_collision(new_enemy_position: Vector2):
 	if new_enemy_position.x <= walls_dict["left"].position.x && move_direction == Vector2.LEFT:
 		return snake.collisionDirection.LEFT
@@ -102,7 +119,6 @@ func get_enemy_pos_after_wall_collision(wall_collision, new_enemy_position: Vect
 				
 func check_enemy_snake_collision(new_enemy_position: Vector2):
 	for part in snake.body_parts:
-		if part.position == new_enemy_position:
+		if new_enemy_position == part.position:
 			return true
-			
 	return false

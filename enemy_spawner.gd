@@ -12,6 +12,12 @@ var enemy_list = [
 @onready var snake: Snake = $"../snake"
 @onready var walls: Walls = $"../walls"
 
+@onready var enemies_spawned: Node = $enemies_spawned
+var enemies = []
+
+var num_enemies_per_spawn: int = 1
+var num_timeouts: int = 0
+
 # Limits enemy types that can be spawned at a given time
 var lower_range = 0
 var upper_range = 0
@@ -21,16 +27,26 @@ func _ready():
 	spawn_timer.timeout.connect(on_timeout)
 	
 func on_timeout():
+	if num_timeouts%5 == 0:
+		num_enemies_per_spawn += 1
+	elif num_enemies_per_spawn%25 == 0:
+		num_enemies_per_spawn += 2
+	
 	if upper_range > (enemy_list.size()-1):
 		upper_range = enemy_list.size()-1
-	spawn_enemy()
+		
+	for i in num_enemies_per_spawn:
+		spawn_enemy()
+		
+	num_timeouts += 1
 	
 func spawn_enemy():
 	var enemy_index = randi_range(lower_range,upper_range)
 	var new_enemy = enemy_list[enemy_index].instantiate()
 	new_enemy.setup(snake, walls)
 	new_enemy.position = get_spawn_position()
-	add_child(new_enemy)
+	enemies_spawned.add_child(new_enemy)
+	enemies.append(new_enemy)
 
 func get_spawn_position():
 	var rand_wall = randi_range(0, 3)

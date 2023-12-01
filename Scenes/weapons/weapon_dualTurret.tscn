@@ -9,3 +9,5 @@ script = ExtResource("1_v84mb")
 
 [node name="sprite_dualTurret" type="Sprite2D" parent="."]
 texture = ExtResource("2_bt1ly")
+
+[node name="bullet_nodes" type="Node" parent="."]

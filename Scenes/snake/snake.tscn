@@ -22,3 +22,7 @@ text = "3/3"
 [node name="health_timer" type="Timer" parent="health_label"]
 wait_time = 2.0
 one_shot = true
+
+[node name="fire_rate_timer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
