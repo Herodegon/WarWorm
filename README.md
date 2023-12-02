@@ -1,2 +1,2 @@
 # WarWorm
-A roguelike where you collect weapons along your body in a snake/tower-defense mash-up
+A "snake-like" where you collect weapons along your body to fight back against an endless horde of enemies
