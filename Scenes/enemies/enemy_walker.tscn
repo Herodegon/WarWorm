@@ -1,14 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://db8opydefqqvt"]
+[gd_scene load_steps=2 format=3 uid="uid://io664bv0b2ul"]
 
-[ext_resource type="Script" path="res://Scenes/enemies/enemy.gd" id="1_h8cck"]
-[ext_resource type="Texture2D" uid="uid://clgo0y8wu6px7" path="res://Assets/enemy.png" id="2_1t7sq"]
+[ext_resource type="Script" path="res://Scenes/enemies/enemy.gd" id="1_8qfl7"]
 
 [node name="enemy_walker" type="Node2D"]
-script = ExtResource("1_h8cck")
+script = ExtResource("1_8qfl7")
 
 [node name="sprite_walker" type="Sprite2D" parent="."]
-z_index = 1
-texture = ExtResource("2_1t7sq")
 
 [node name="health_label" type="Label" parent="."]
 visible = false
@@ -18,7 +15,7 @@ offset_top = -48.0
 offset_right = 28.0
 offset_bottom = -22.0
 theme_override_colors/font_color = Color(0.858824, 0, 0, 1)
-text = "2/2"
+text = "3/3"
 
 [node name="health_timer" type="Timer" parent="health_label"]
 wait_time = 2.0

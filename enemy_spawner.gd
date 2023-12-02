@@ -5,7 +5,7 @@ extends Node
 const BODY_SEGMENT_SIZE = 32
 
 var enemy_list = [
-	preload("res://Scenes/enemies/enemy.tscn")
+	preload("res://Scenes/enemies/enemy_walker.tscn")
 ]
 
 @onready var spawn_timer = $spawn_timer
